@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class WeatherLocation {
   final String city;
   final String dateTime;
@@ -28,7 +26,7 @@ final locationList = [
     dateTime: '07:50 PM - Monday, 10 Sep 2022',
     temperature: '20\u2103',
     weatherType: 'Night',
-    iconUrl: 'assets/moon.svg',
+    iconUrl: 'assets/images/moon.svg',
     wind: 10,
     rain: 2,
     humidity: 10,
@@ -38,7 +36,7 @@ final locationList = [
     dateTime: '02:40 PM - Monday, 10 Sep 2022',
     temperature: '28\u2103',
     weatherType: 'Sunny',
-    iconUrl: 'assets/sunny.svg',
+    iconUrl: 'assets/images/sunny.svg',
     wind: 8,
     rain: 2,
     humidity: 82,
@@ -48,7 +46,7 @@ final locationList = [
     dateTime: '09:40 AM - Monday, 10 Sep 2022',
     temperature: '15\u2103',
     weatherType: 'Cloudy',
-    iconUrl: 'assets/cloudy.svg',
+    iconUrl: 'assets/images/cloudy.svg',
     wind: 9,
     rain: 20,
     humidity: 62,
@@ -58,9 +56,9 @@ final locationList = [
     dateTime: '07:24 AM - Monday, 10 Sep 2022',
     temperature: '18\u2103',
     weatherType: 'Rainy',
-    iconUrl: 'assets/rainy.svg',
+    iconUrl: 'assets/images/Rrainy.svg',
     wind: 10,
-    rain: 15,
+    rain: 95,
     humidity: 75,
   ),
 ];
