@@ -1,12 +1,14 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 class WeatherLocation {
-  final String city;
-  final String dateTime;
-  final String temperature;
-  final String weatherType;
-  final String iconUrl;
-  final int wind;
-  final int rain;
-  final int humidity;
+  var city;
+  var dateTime;
+  var temperature;
+  var weatherType;
+  var iconUrl;
+  var wind;
+  var rain;
+  var humidity;
 
   WeatherLocation({
     required this.city,
@@ -18,6 +20,19 @@ class WeatherLocation {
     required this.rain,
     required this.humidity,
   });
+
+  WeatherLocation.fromJson(Map<String, dynamic> json) {
+    city = json['location']['region'];
+    dateTime = json['current']['last_updated'];
+    temperature = json['current']['temp_c'];
+    weatherType = json['current']['condition']['text'];
+    iconUrl = json['current']['condition']['icon'];
+    wind = json['current']['wind_kph'];
+    rain = json['current']['cloud'];
+    humidity = json['current']['humidity'];
+  }
+
+  getData(double latitude, double longitude) {}
 }
 
 final locationList = [

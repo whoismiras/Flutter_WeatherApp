@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/models/weather_locations.dart';
+import 'package:weather_app/data/get_location.dart';
+import 'package:weather_app/data/weatherData.dart';
 
-class SingleWeather extends StatelessWidget {
-  final int index;
-  const SingleWeather(this.index, {super.key});
+var dayInfo = DateTime.now();
+var dateFormat = DateFormat('EEEE, d MMM,  yyyy').format(dayInfo);
+
+class SingleWeather extends StatefulWidget {
+  const SingleWeather({super.key});
+
+  @override
+  State<SingleWeather> createState() => _SingleWeatherState();
+}
+
+class _SingleWeatherState extends State<SingleWeather> {
+  var client = WeatherData();
+  WeatherLocation? data;
+
+  info() async {
+    var position = await GetPosition();
+    print(position);
+    // data = await client.getData(position.latitude, position.longitude);
+    data = await client.getData('43.24', '76.89');
+    setState(() {});
+    return data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    info();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +54,7 @@ class SingleWeather extends StatelessWidget {
                       height: 150,
                     ),
                     Text(
-                      locationList[index].city,
+                      '${data?.city}',
                       style: GoogleFonts.lato(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
@@ -38,7 +65,9 @@ class SingleWeather extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      locationList[index].dateTime,
+                      dateFormat,
+                      // '${data?.dateTime}',
+                      //locationList[index].dateTime,
                       style: GoogleFonts.lato(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -54,7 +83,8 @@ class SingleWeather extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                locationList[index].temperature,
+                '${data?.temperature}' '\u2103',
+                // locationList[index].temperature,
                 style: GoogleFonts.lato(
                   fontSize: 85,
                   fontWeight: FontWeight.w300,
@@ -63,21 +93,27 @@ class SingleWeather extends StatelessWidget {
               ),
               Row(
                 children: [
-                  SvgPicture.asset(
-                    locationList[index].iconUrl,
+                  // SvgPicture.asset(
+                  //   locationList[index].iconUrl,
+                  //   width: 34,
+                  //   height: 34,
+                  //   color: Colors.white,
+                  // ),
+                  Image.network(
+                    'http:${data?.iconUrl}',
                     width: 34,
                     height: 34,
-                    color: Colors.white,
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Text(
-                    locationList[index].weatherType,
+                    '${data?.weatherType}',
+                    // locationList[index].weatherType,
                     style: GoogleFonts.lato(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      //   color: Colors.white,
                     ),
                   ),
                 ],
@@ -112,7 +148,8 @@ class SingleWeather extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          locationList[index].wind.toString(),
+                          '${data?.wind}',
+                          // locationList[index].wind.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -154,7 +191,8 @@ class SingleWeather extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          locationList[index].rain.toString(),
+                          '${data?.rain}',
+                          //locationList[index].rain.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -196,7 +234,8 @@ class SingleWeather extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          locationList[index].humidity.toString(),
+                          '${data?.humidity}',
+                          //locationList[index].humidity.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
