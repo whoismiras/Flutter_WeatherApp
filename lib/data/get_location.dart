@@ -7,7 +7,7 @@ import 'package:weather_app/models/weather_locations.dart';
 ///
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
-Future<Position> GetPosition([WeatherLocation? data]) async {
+Future<Position> GetPosition() async {
   bool serviceEnabled;
   LocationPermission permission;
 

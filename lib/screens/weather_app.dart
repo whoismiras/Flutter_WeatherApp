@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_app/models/weather_locations.dart';
@@ -15,27 +13,19 @@ class WeatherApp extends StatefulWidget {
 }
 
 class _WeatherAppState extends State<WeatherApp> {
+  // ignore: prefer_final_fields
   int _currentPage = 0;
   late String bgImg = 'assets/images/sunny.jpg';
 
-  _onPageChanged(int index) {
-    setState(() {
-      _currentPage = index;
-    });
-  }
+  // _onPageChanged(int index) {
+  //   setState(() {
+
+  //     _currentPage = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // if (locationList[_currentPage].weatherType == 'Sunny') {
-    //   bgImg = 'assets/images/sunny.jpg';
-    // } else if (locationList[_currentPage].weatherType == 'Night') {
-    //   bgImg = 'assets/images/night.jpg';
-    // } else if (locationList[_currentPage].weatherType == 'Cloudy') {
-    //   bgImg = 'assets/images/cloudy.jpg';
-    // } else if (locationList[_currentPage].weatherType == 'Rainy') {
-    //   bgImg = 'assets/images/rainy.jpg';
-    // }
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -54,6 +44,7 @@ class _WeatherAppState extends State<WeatherApp> {
           Container(
             margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
             child: GestureDetector(
+              // ignore: avoid_print
               onTap: () => print('Menu Clicked!'),
               child: SvgPicture.asset(
                 'assets/images/menu.svg',
@@ -88,9 +79,9 @@ class _WeatherAppState extends State<WeatherApp> {
             ),
           ),
           PageView.builder(
-            scrollDirection: Axis.horizontal,
-            onPageChanged: _onPageChanged,
-            itemCount: locationList.length,
+            //  scrollDirection: Axis.horizontal,
+            // onPageChanged: _onPageChanged,
+            // itemCount: locationList.length,
             itemBuilder: (ctx, i) => const SingleWeather(),
           ),
         ],

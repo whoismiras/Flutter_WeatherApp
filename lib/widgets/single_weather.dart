@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/models/weather_locations.dart';
-import 'package:weather_app/data/get_location.dart';
 import 'package:weather_app/data/weatherData.dart';
 
 var dayInfo = DateTime.now();
@@ -20,9 +23,10 @@ class _SingleWeatherState extends State<SingleWeather> {
   WeatherLocation? data;
 
   info() async {
-    var position = await GetPosition();
+    var position = await Geolocator.getCurrentPosition();
     print(position);
-    // data = await client.getData(position.latitude, position.longitude);
+    EasyLoading.show(status: 'loading...');
+    //data = await client.getData(position.latitude, position.longitude);
     data = await client.getData('43.24', '76.89');
     setState(() {});
     return data;
@@ -36,6 +40,9 @@ class _SingleWeatherState extends State<SingleWeather> {
 
   @override
   Widget build(BuildContext context) {
+    if (data == null) {
+      return const SizedBox();
+    }
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -66,7 +73,6 @@ class _SingleWeatherState extends State<SingleWeather> {
                     ),
                     Text(
                       dateFormat,
-                      // '${data?.dateTime}',
                       //locationList[index].dateTime,
                       style: GoogleFonts.lato(
                         fontSize: 14,
@@ -113,7 +119,6 @@ class _SingleWeatherState extends State<SingleWeather> {
                     style: GoogleFonts.lato(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
-                      //   color: Colors.white,
                     ),
                   ),
                 ],
