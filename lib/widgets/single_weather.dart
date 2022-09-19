@@ -1,18 +1,19 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app/models/weather_locations.dart';
 import 'package:weather_app/data/weatherData.dart';
+
+import '../models/weather_locations.dart';
 
 var dayInfo = DateTime.now();
 var dateFormat = DateFormat('EEEE, d MMM,  yyyy').format(dayInfo);
 
 class SingleWeather extends StatefulWidget {
-  const SingleWeather({super.key});
+  const SingleWeather({required this.weatherLocation, super.key});
+  final WeatherLocation weatherLocation;
 
   @override
   State<SingleWeather> createState() => _SingleWeatherState();
@@ -20,27 +21,33 @@ class SingleWeather extends StatefulWidget {
 
 class _SingleWeatherState extends State<SingleWeather> {
   var client = WeatherData();
-  WeatherLocation? data;
+  //WeatherLocation? data;
 
-  info() async {
-    var position = await Geolocator.getCurrentPosition();
-    print(position);
-    EasyLoading.show(status: 'loading...');
-    //data = await client.getData(position.latitude, position.longitude);
-    data = await client.getData('43.24', '76.89');
-    setState(() {});
-    return data;
-  }
+  // info() async {
+  //   var position = await Geolocator.getCurrentPosition();
+  //   print(position);
+  //   EasyLoading.show(status: 'loading...');
+  //   //data = await client.getData(position.latitude, position.longitude);
+  //   //data = await client.getData('43.24', '76.89');
+  //   print(_currentPage);
+  //   if (_currentPage == null) {
+  //     data = await client.getData('43.24', '76.89');
+  //   } else if (_currentPage == 1) {
+  //     data = await client.getData('19.74', '-155.85');
+  //   }
+  //   setState(() {});
+  //   return data;
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    info();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   info();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    if (data == null) {
+    if (widget.weatherLocation == null) {
       return const SizedBox();
     }
     return Container(
@@ -61,7 +68,8 @@ class _SingleWeatherState extends State<SingleWeather> {
                       height: 150,
                     ),
                     Text(
-                      '${data?.city}',
+                      // '${data?.city}',
+                      widget.weatherLocation.city,
                       style: GoogleFonts.lato(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
@@ -89,8 +97,9 @@ class _SingleWeatherState extends State<SingleWeather> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${data?.temperature}' '\u2103',
-                // locationList[index].temperature,
+                //'${data?.temperature}' '\u2103',
+
+                widget.weatherLocation.temperature,
                 style: GoogleFonts.lato(
                   fontSize: 85,
                   fontWeight: FontWeight.w300,
@@ -99,23 +108,23 @@ class _SingleWeatherState extends State<SingleWeather> {
               ),
               Row(
                 children: [
-                  // SvgPicture.asset(
-                  //   locationList[index].iconUrl,
-                  //   width: 34,
-                  //   height: 34,
-                  //   color: Colors.white,
-                  // ),
-                  Image.network(
-                    'http:${data?.iconUrl}',
+                  SvgPicture.asset(
+                    widget.weatherLocation.iconUrl,
                     width: 34,
                     height: 34,
+                    color: Colors.white,
                   ),
+                  //Image.network(
+                  //   'http:${data?.iconUrl}',
+                  //   width: 34,
+                  //   height: 34,
+                  // ),
                   const SizedBox(
                     width: 10,
                   ),
                   Text(
-                    '${data?.weatherType}',
-                    // locationList[index].weatherType,
+                    // '${data?.weatherType}',
+                    widget.weatherLocation.weatherType,
                     style: GoogleFonts.lato(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -153,8 +162,8 @@ class _SingleWeatherState extends State<SingleWeather> {
                           ),
                         ),
                         Text(
-                          '${data?.wind}',
-                          // locationList[index].wind.toString(),
+                          //'${data?.wind}',
+                          widget.weatherLocation.wind.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -196,8 +205,8 @@ class _SingleWeatherState extends State<SingleWeather> {
                           ),
                         ),
                         Text(
-                          '${data?.rain}',
-                          //locationList[index].rain.toString(),
+                          //'${data?.rain}',
+                          widget.weatherLocation.rain.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -239,8 +248,8 @@ class _SingleWeatherState extends State<SingleWeather> {
                           ),
                         ),
                         Text(
-                          '${data?.humidity}',
-                          //locationList[index].humidity.toString(),
+                          //'${data?.humidity}',
+                          widget.weatherLocation.humidity.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

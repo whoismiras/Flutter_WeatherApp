@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/models/weather_locations.dart';

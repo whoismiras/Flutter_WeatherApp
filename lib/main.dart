@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: WeatherApp(),
+      home: const WeatherApp(),
       builder: EasyLoading.init(),
     );
   }
