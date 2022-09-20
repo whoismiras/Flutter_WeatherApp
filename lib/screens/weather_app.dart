@@ -1,57 +1,45 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:weather_app/models/weather_locations.dart';
 import 'package:weather_app/widgets/single_weather.dart';
 
-import '../data/weatherData.dart';
 import '../widgets/slider_dot.dart';
 
 class WeatherApp extends StatefulWidget {
   const WeatherApp({super.key});
 
-  // final index;
-  // WeatherApp(this.index);
-
   @override
-  _WeatherAppState createState() => _WeatherAppState();
+  State<WeatherApp> createState() => _WeatherAppState();
 }
 
 class _WeatherAppState extends State<WeatherApp> {
-  // ignore: prefer_final_fields
-  final List<WeatherLocation> locationList = [];
+  final List<Location> positions = [
+    Location(
+      latitude: "43.23",
+      longitude: "76.88",
+    ),
+    Location(
+      latitude: "19.74",
+      longitude: "-155.85",
+    ),
+    Location(
+      latitude: "40.73",
+      longitude: "-73.93",
+    ),
+    Location(
+      latitude: "48.86",
+      longitude: "2.34",
+    ),
+  ];
+
   int _currentPage = 0;
   late String bgImg = 'assets/images/sunny.jpg';
-  var client = WeatherData();
-  WeatherLocation? data;
 
   _onPageChanged(int index) {
     setState(() {
       _currentPage = index;
     });
-  }
-
-  info() async {
-    var position = await Geolocator.getCurrentPosition();
-    print(position);
-    EasyLoading.show(status: 'loading...');
-    //data = await client.getData(position.latitude, position.longitude);
-
-    if (_currentPage == 0) {
-      data = await client.getData('43.24', '76.89');
-    } else if (_currentPage == 1) {
-      data = await client.getData('19.74', '-155.85');
-    }
-    setState(() {});
-    locationList.add(data!);
-    return data;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    info();
   }
 
   @override
@@ -103,7 +91,7 @@ class _WeatherAppState extends State<WeatherApp> {
             margin: const EdgeInsets.only(top: 140, left: 15),
             child: Row(
               children: [
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < positions.length; i++)
                   if (i == _currentPage) SliderDot(true) else SliderDot(false)
               ],
             ),
@@ -111,12 +99,18 @@ class _WeatherAppState extends State<WeatherApp> {
           PageView.builder(
             scrollDirection: Axis.horizontal,
             onPageChanged: _onPageChanged,
-            itemCount: 4,
-            itemBuilder: (ctx, i) =>
-                SingleWeather(weatherLocation: locationList[i]),
+            itemCount: positions.length,
+            itemBuilder: (ctx, i) => SingleWeather(position: positions[i]),
           ),
         ],
       ),
     );
   }
+}
+
+class Location {
+  final String longitude;
+  final String latitude;
+
+  Location({required this.longitude, required this.latitude});
 }

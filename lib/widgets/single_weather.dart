@@ -1,10 +1,11 @@
 // ignore_for_file: avoid_print, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/data/weatherData.dart';
+import 'package:weather_app/screens/weather_app.dart';
 
 import '../models/weather_locations.dart';
 
@@ -12,8 +13,8 @@ var dayInfo = DateTime.now();
 var dateFormat = DateFormat('EEEE, d MMM,  yyyy').format(dayInfo);
 
 class SingleWeather extends StatefulWidget {
-  const SingleWeather({required this.weatherLocation, super.key});
-  final WeatherLocation weatherLocation;
+  const SingleWeather({required this.position, super.key});
+  final Location position;
 
   @override
   State<SingleWeather> createState() => _SingleWeatherState();
@@ -21,33 +22,28 @@ class SingleWeather extends StatefulWidget {
 
 class _SingleWeatherState extends State<SingleWeather> {
   var client = WeatherData();
-  //WeatherLocation? data;
+  WeatherLocation? data;
 
-  // info() async {
-  //   var position = await Geolocator.getCurrentPosition();
-  //   print(position);
-  //   EasyLoading.show(status: 'loading...');
-  //   //data = await client.getData(position.latitude, position.longitude);
-  //   //data = await client.getData('43.24', '76.89');
-  //   print(_currentPage);
-  //   if (_currentPage == null) {
-  //     data = await client.getData('43.24', '76.89');
-  //   } else if (_currentPage == 1) {
-  //     data = await client.getData('19.74', '-155.85');
-  //   }
-  //   setState(() {});
-  //   return data;
-  // }
+  info() async {
+    EasyLoading.show(status: 'loading...');
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   info();
-  // }
+    data = await client.getData(
+        widget.position.latitude, widget.position.longitude);
+
+    setState(() {});
+    return data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    client = WeatherData();
+    info();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.weatherLocation == null) {
+    if (data == null) {
       return const SizedBox();
     }
     return Container(
@@ -69,7 +65,7 @@ class _SingleWeatherState extends State<SingleWeather> {
                     ),
                     Text(
                       // '${data?.city}',
-                      widget.weatherLocation.city,
+                      data!.city,
                       style: GoogleFonts.lato(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
@@ -99,7 +95,7 @@ class _SingleWeatherState extends State<SingleWeather> {
               Text(
                 //'${data?.temperature}' '\u2103',
 
-                widget.weatherLocation.temperature,
+                '${data!.temperature}\u2103',
                 style: GoogleFonts.lato(
                   fontSize: 85,
                   fontWeight: FontWeight.w300,
@@ -108,23 +104,23 @@ class _SingleWeatherState extends State<SingleWeather> {
               ),
               Row(
                 children: [
-                  SvgPicture.asset(
-                    widget.weatherLocation.iconUrl,
-                    width: 34,
-                    height: 34,
-                    color: Colors.white,
-                  ),
-                  //Image.network(
-                  //   'http:${data?.iconUrl}',
+                  // SvgPicture.asset(
+                  //   widget.weatherLocation.iconUrl,
                   //   width: 34,
                   //   height: 34,
+                  //   color: Colors.white,
                   // ),
+                  Image.network(
+                    'http:${data!.iconUrl}',
+                    width: 34,
+                    height: 34,
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
                   Text(
                     // '${data?.weatherType}',
-                    widget.weatherLocation.weatherType,
+                    data!.weatherType,
                     style: GoogleFonts.lato(
                       fontSize: 25,
                       fontWeight: FontWeight.w500,
@@ -163,7 +159,7 @@ class _SingleWeatherState extends State<SingleWeather> {
                         ),
                         Text(
                           //'${data?.wind}',
-                          widget.weatherLocation.wind.toString(),
+                          data!.wind.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -206,7 +202,7 @@ class _SingleWeatherState extends State<SingleWeather> {
                         ),
                         Text(
                           //'${data?.rain}',
-                          widget.weatherLocation.rain.toString(),
+                          data!.rain.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -249,7 +245,7 @@ class _SingleWeatherState extends State<SingleWeather> {
                         ),
                         Text(
                           //'${data?.humidity}',
-                          widget.weatherLocation.humidity.toString(),
+                          data!.humidity.toString(),
                           style: GoogleFonts.lato(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
