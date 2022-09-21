@@ -64,7 +64,6 @@ class _SingleWeatherState extends State<SingleWeather> {
                       height: 150,
                     ),
                     Text(
-                      // '${data?.city}',
                       data!.city,
                       style: GoogleFonts.lato(
                         fontSize: 35,
@@ -77,7 +76,6 @@ class _SingleWeatherState extends State<SingleWeather> {
                     ),
                     Text(
                       dateFormat,
-                      //locationList[index].dateTime,
                       style: GoogleFonts.lato(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -93,8 +91,6 @@ class _SingleWeatherState extends State<SingleWeather> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                //'${data?.temperature}' '\u2103',
-
                 '${data!.temperature}\u2103',
                 style: GoogleFonts.lato(
                   fontSize: 85,
