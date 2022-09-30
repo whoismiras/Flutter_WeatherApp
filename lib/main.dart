@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/screens/weather_app.dart';
 
 void main() {
@@ -35,7 +37,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const WeatherApp(),
+      home: BlocProvider(
+        create: (context) => WeatherBloc(),
+        child: const WeatherApp(),
+      ),
       builder: EasyLoading.init(),
     );
   }

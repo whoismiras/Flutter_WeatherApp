@@ -9,7 +9,7 @@ import 'package:weather_app/models/weather_locations.dart';
 class WeatherData {
   Future<WeatherLocation> getData(var latitude, var longitude) async {
     var uriCall = Uri.parse(
-        'http://api.weatherapi.com/v1/current.json?key=a65023395c79491a8ee100000221209&q=$latitude,$longitude&aqi=no');
+        'http://api.weatherapi.com/v1/current.json?key=c60c6daf523f405c9cf153423222609&q=$latitude,$longitude&aqi=no');
     var response = await http.get(uriCall);
     var body = jsonDecode(response.body);
     EasyLoading.dismiss();

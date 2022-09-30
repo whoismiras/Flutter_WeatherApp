@@ -17,8 +17,6 @@ class OnPageChangedEvent extends WeatherEvent {
   List<Object> get props => [index];
 }
 
-class InfoEvent extends WeatherEvent {
-  final Location location;
 
-  const InfoEvent({required this.location});
-}
+
+class InitEvent extends WeatherEvent {}
